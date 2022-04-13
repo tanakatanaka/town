@@ -53,6 +53,7 @@ void AtownCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 	// set up gameplay key bindings
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	PlayerInputComponent->BindAction("MoveRotate", IE_Released, this, &AtownCharacter::MoveRotate);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AtownCharacter::MoveRight);
 
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AtownCharacter::TouchStarted);
@@ -63,6 +64,11 @@ void AtownCharacter::MoveRight(float Value)
 {
 	// add movement in that direction
 	AddMovementInput(FVector(0.f,-1.f,0.f), Value);
+}
+
+void AtownCharacter::MoveRotate()
+{
+	SetActorRotation(FRotator::ZeroRotator);
 }
 
 void AtownCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location)
