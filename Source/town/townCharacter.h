@@ -24,6 +24,9 @@ protected:
 	/** Called for side to side input */
 	void MoveRight(float Val);
 
+	/** Called for Forward to Forward input */
+	void MoveForward(float Val);
+
 	void MoveRotate();
 
 	/** Handle touch inputs. */
@@ -36,17 +39,8 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
 
-	virtual void Landed(const FHitResult& Hit) override;
-
 public:
 	AtownCharacter();
-
-	UFUNCTION()
-		void DoubleJump();
-	UPROPERTY()
-		int DoubleJumpCounter;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float JumpHeight;
 
 	/** Returns SideViewCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }

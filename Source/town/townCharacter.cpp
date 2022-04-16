@@ -40,8 +40,6 @@ AtownCharacter::AtownCharacter()
 	GetCharacterMovement()->GroundFriction = 3.f;
 	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
-	JumpHeight = 900.0f;
-	DoubleJumpCounter = 0;
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
@@ -52,11 +50,11 @@ AtownCharacter::AtownCharacter()
 void AtownCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// set up gameplay key bindings
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AtownCharacter::DoubleJump);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAction("MoveRotate", IE_Released, this, &AtownCharacter::MoveRotate);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AtownCharacter::MoveRight);
+	PlayerInputComponent->BindAxis("MoveForward", this, &AtownCharacter::MoveForward);
 
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AtownCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &AtownCharacter::TouchStopped);
@@ -68,23 +66,16 @@ void AtownCharacter::MoveRight(float Value)
 	AddMovementInput(FVector(0.f,-1.f,0.f), Value);
 }
 
+void AtownCharacter::MoveForward(float Value)
+{
+	// add movement in that direction
+	AddMovementInput(FVector(1.f, 0.f, 0.f), Value);
+}
+
 void AtownCharacter::MoveRotate()
 {
 	//AddMovementInput(FVector(0.f, -1.f, 0.f), Value);
 	SetActorRotation(FRotator::ZeroRotator);
-}
-
-void AtownCharacter::DoubleJump()
-{
-	if (DoubleJumpCounter <= 1) {
-		ACharacter::LaunchCharacter(FVector(0, 0, JumpHeight), false, true);
-		DoubleJumpCounter++;
-	}
-}
-
-void AtownCharacter::Landed(const FHitResult& Hit)
-{
-	DoubleJumpCounter = 0;
 }
 
 void AtownCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location)
