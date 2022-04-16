@@ -36,9 +36,17 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
 
+	virtual void Landed(const FHitResult& Hit) override;
 
 public:
 	AtownCharacter();
+
+	UFUNCTION()
+		void DoubleJump();
+	UPROPERTY()
+		int DoubleJumpCounter;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float JumpHeight;
 
 	/** Returns SideViewCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
