@@ -29,6 +29,8 @@ protected:
 
 	void MoveRotate();
 
+	void Squat();
+
 	/** Handle touch inputs. */
 	void TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location);
 
@@ -42,8 +44,15 @@ protected:
 public:
 	AtownCharacter();
 
+	UFUNCTION(BlueprintCallable, Category = "TownChara")
+	bool IsSquat();
+
 	/** Returns SideViewCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+
+private:
+	UPROPERTY(EditAnywhere, Category = "TownChara")
+	bool bIsSquat;
 };
