@@ -51,11 +51,15 @@ void AtownCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 {
 	// set up gameplay key bindings
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("MoveRotate", IE_Released, this, &AtownCharacter::MoveRotate);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AtownCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("MoveForward", this, &AtownCharacter::MoveForward);
 
+	//PlayerInputComponent->BindTouch("Crouch", this, &ACharacter::Crouch);
+	//PlayerInputComponent->BindTouch("Crouch", this, &ACharacter::UnCrouch);
+
+	PlayerInputComponent->BindAction("Crouch", IE_Released, this, &AtownCharacter::ChangeCrouch);
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AtownCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &AtownCharacter::TouchStopped);
 }
@@ -69,13 +73,20 @@ void AtownCharacter::MoveRight(float Value)
 void AtownCharacter::MoveForward(float Value)
 {
 	// add movement in that direction
-	AddMovementInput(FVector(1.f, 0.f, 0.f), Value);
+	//AddMovementInput(FVector(1.f, 0.f, 0.f), Value);
 }
 
 void AtownCharacter::MoveRotate()
 {
 	//AddMovementInput(FVector(0.f, -1.f, 0.f), Value);
 	SetActorRotation(FRotator::ZeroRotator);
+}
+
+void AtownCharacter::ChangeCrouch()
+{
+	isCrouching = !isCrouching;
+	UE_LOG(LogTemp, Error, TEXT("isCrouching..."));
+
 }
 
 void AtownCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location)
@@ -87,15 +98,5 @@ void AtownCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, const FVe
 void AtownCharacter::TouchStopped(const ETouchIndex::Type FingerIndex, const FVector Location)
 {
 	StopJumping();
-}
-
-void AtownCharacter::Squat()
-{
-	bIsSquat = !bIsSquat;
-}
-
-bool AtownCharacter::IsSquat()
-{
-	return bIsSquat;
 }
 
