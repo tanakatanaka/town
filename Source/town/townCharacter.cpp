@@ -92,3 +92,8 @@ void AtownCharacter::TouchStopped(const ETouchIndex::Type FingerIndex, const FVe
 	StopJumping();
 }
 
+void AtownCharacter::Conbat()
+{
+
+}
+

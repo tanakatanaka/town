@@ -47,7 +47,13 @@ public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	
+	UFUNCTION(BlueprintCallable)
+	void Conbat();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool isCrouching;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    bool isCombat;
 
 };
