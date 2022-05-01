@@ -29,8 +29,6 @@ protected:
 
 	void MoveRotate();
 
-	void ChangeCrouch();
-
 	/** Handle touch inputs. */
 	void TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location);
 

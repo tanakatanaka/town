@@ -59,7 +59,6 @@ void AtownCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 	//PlayerInputComponent->BindTouch("Crouch", this, &ACharacter::Crouch);
 	//PlayerInputComponent->BindTouch("Crouch", this, &ACharacter::UnCrouch);
 
-	PlayerInputComponent->BindAction("Crouch", IE_Released, this, &AtownCharacter::ChangeCrouch);
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AtownCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &AtownCharacter::TouchStopped);
 }
@@ -80,13 +79,6 @@ void AtownCharacter::MoveRotate()
 {
 	//AddMovementInput(FVector(0.f, -1.f, 0.f), Value);
 	SetActorRotation(FRotator::ZeroRotator);
-}
-
-void AtownCharacter::ChangeCrouch()
-{
-	isCrouching = !isCrouching;
-	UE_LOG(LogTemp, Error, TEXT("isCrouching..."));
-
 }
 
 void AtownCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location)
