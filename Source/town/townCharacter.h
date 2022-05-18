@@ -19,6 +19,10 @@ class AtownCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
+	UPROPERTY(EditAnywhere)
+	UAnimMontage* SlidingMontage;
+
+
 protected:
 
 	/** Called for side to side input */
@@ -38,6 +42,11 @@ protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
+
+	void Sliding();
+
+	float SlidingDistance = 6000;
+
 
 public:
 	AtownCharacter();

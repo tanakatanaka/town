@@ -6,6 +6,7 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/Character.h"
 
 AtownCharacter::AtownCharacter()
 {
@@ -53,6 +54,7 @@ void AtownCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("MoveRotate", IE_Released, this, &AtownCharacter::MoveRotate);
+	PlayerInputComponent->BindAction("Sliding", IE_Pressed, this, &AtownCharacter::Sliding);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AtownCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("MoveForward", this, &AtownCharacter::MoveForward);
 
@@ -90,6 +92,18 @@ void AtownCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, const FVe
 void AtownCharacter::TouchStopped(const ETouchIndex::Type FingerIndex, const FVector Location)
 {
 	StopJumping();
+}
+
+void AtownCharacter::Sliding()
+{
+	const FVector forwardDir = this->GetActorRotation().Vector();
+	LaunchCharacter(forwardDir * SlidingDistance, true, true);
+
+	if (SlidingMontage)
+	{
+		PlayAnimMontage(SlidingMontage, 1, NAME_None);
+	}
+
 }
 
 void AtownCharacter::Conbat()
